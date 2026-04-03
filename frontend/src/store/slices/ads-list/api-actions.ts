@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { AxiosInstance } from 'axios'
-import type { AdsGetCompactOut, AdsGetIn } from '../../../types/ad'
+import type { AdsGetCompactOut } from '../../../types/compact-ad'
+import type { AdsGetIn } from '../../../types/sort-params'
 
 export const fetchAdsAction = createAsyncThunk<
 	AdsGetCompactOut,

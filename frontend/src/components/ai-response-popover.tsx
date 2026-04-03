@@ -1,4 +1,5 @@
 import { Button, Paper, Popover, Stack, Typography } from '@mui/material'
+import { useRef } from 'react'
 
 type AiResponsePopoverProps = {
     open: boolean
@@ -25,16 +26,43 @@ function AiResponsePopover({
     applyLabel = 'Применить',
     showApplyButton = true,
 }: AiResponsePopoverProps) {
+    const paperRef = useRef<HTMLDivElement | null>(null)
+
+    const blurFocusedElementInsidePopover = () => {
+        const activeElement = document.activeElement
+        if (!activeElement || !(activeElement instanceof HTMLElement)) {
+            return
+        }
+
+        if (paperRef.current?.contains(activeElement)) {
+            activeElement.blur()
+        }
+    }
+
+    const handleClose = () => {
+        blurFocusedElementInsidePopover()
+        onClose()
+    }
+
+    const handleApply = () => {
+        blurFocusedElementInsidePopover()
+        onApply?.()
+    }
+
     return (
         <Popover
             open={open}
             anchorEl={anchorEl}
-            onClose={onClose}
+            onClose={handleClose}
+            disableAutoFocus
+            disableEnforceFocus
+            disableRestoreFocus
             anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
             transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             sx={{ mt: -1 }}
         >
             <Paper
+                ref={paperRef}
                 elevation={2}
                 sx={{
                     width: 380,
@@ -59,13 +87,13 @@ function AiResponsePopover({
                             variant="contained"
                             size="small"
                             sx={{ textTransform: 'none', minWidth: 86 }}
-                            onClick={onApply}
+                            onClick={handleApply}
                             disabled={!onApply || isLoading || Boolean(errorMessage) || !responseText}
                         >
                             {applyLabel}
                         </Button>
                     )}
-                    <Button variant="text" size="small" onClick={onClose} sx={{ textTransform: 'none', minWidth: 74 }}>
+                    <Button variant="text" size="small" onClick={handleClose} sx={{ textTransform: 'none', minWidth: 74 }}>
                         Закрыть
                     </Button>
                 </Stack>

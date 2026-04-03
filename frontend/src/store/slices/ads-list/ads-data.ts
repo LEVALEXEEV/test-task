@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { CompactAd } from '../../../types/ad'
+import type { CompactAd } from '../../../types/compact-ad'
 import { fetchAdsAction } from './api-actions'
 import { NameSpace } from '../../../const'
 

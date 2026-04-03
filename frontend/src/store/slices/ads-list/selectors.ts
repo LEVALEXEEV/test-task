@@ -1,5 +1,5 @@
 import type { State } from "../../index";
-import type { CompactAd } from "../../../types/ad";
+import type { CompactAd } from "../../../types/compact-ad";
 import { NameSpace } from "../../../const";
 
 export const getAds = (state: State): CompactAd[] =>
