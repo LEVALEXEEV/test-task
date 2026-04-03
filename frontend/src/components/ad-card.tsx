@@ -65,7 +65,7 @@ function AdCard({ item, viewMode }: { item: CompactAd; viewMode: 'grid' | 'list'
                 >
                     {item.title}
                 </Typography>
-                <Typography sx={{ color: '#00000066', fontWeight: 700, mt: 0.3 }}>{item.price}</Typography>
+                <Typography sx={{ color: '#00000066', fontWeight: 700, mt: 0.3 }}>{item.price} ₽</Typography>
                 {item.needsRevision && (
                     <Chip
                         label={
