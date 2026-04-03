@@ -1,0 +1,63 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: test-task-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:8080
+      VITE_OLLAMA_URL: http://localhost:11434
+      VITE_OLLAMA_MODEL: llama3:latest
+    depends_on:
+      server:
+        condition: service_started
+      ollama:
+        condition: service_started
+      ollama-init:
+        condition: service_completed_successfully
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: test-task-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: test-task-ollama
+    ports:
+      - "11434:11434"
+    environment:
+      OLLAMA_ORIGINS: http://localhost:5173
+    volumes:
+      - ollama_data:/root/.ollama
+
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: test-task-ollama-init
+    depends_on:
+      ollama:
+        condition: service_started
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_MODEL: llama3:latest
+    command: >
+      sh -c "
+      until ollama list > /dev/null 2>&1; do
+        sleep 2;
+      done;
+      ollama pull \"$${OLLAMA_MODEL}\"
+      "
+
+volumes:
+  ollama_data:
