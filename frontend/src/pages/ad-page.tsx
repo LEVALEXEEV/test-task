@@ -3,6 +3,7 @@ import { Box, Button, CircularProgress, Divider, Paper, Stack, Typography } from
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded'
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
 import { Link as RouterLink, useParams } from 'react-router-dom'
 import type { AdParamValue } from '../types/ad'
 import { AD_CATEGORY_PARAM_KEYS, AD_PARAM_LABELS, AD_PARAM_VALUE_LABELS } from '../const'
@@ -86,6 +87,7 @@ function AdPage() {
                     p: 3,
                 }}
             >
+
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 0.5 }}>
                     <Typography sx={{ fontSize: 30, lineHeight: 1.15, fontWeight: 500, color: '#2E2E33' }}>
                         {ad.title}
@@ -96,16 +98,31 @@ function AdPage() {
                 </Stack>
 
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
-                    <Button
-                        component={RouterLink}
-                        to={`/ads/${adId}/edit`}
-                        variant="contained"
-                        endIcon={<EditOutlinedIcon />}
-                        sx={{ textTransform: 'none', bgcolor: '#2A8BF2', borderRadius: 1.5, boxShadow: 'none', fontWeight: 300 }}
-                    >
-                        Редактировать
-                    </Button>
-
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Button
+                            component={RouterLink}
+                            to="/ads"
+                            sx={{
+                                textTransform: 'none',
+                                color: '#4E5057',
+                                bgcolor: '#FFFFFF',
+                                border: '1px solid #E6E7EB',
+                                borderRadius: 1.5,
+                                '&:hover': { bgcolor: '#F3F4F7' },
+                            }}
+                        >
+                            <ArrowBackRoundedIcon />
+                        </Button>
+                        <Button
+                            component={RouterLink}
+                            to={`/ads/${adId}/edit`}
+                            variant="contained"
+                            endIcon={<EditOutlinedIcon />}
+                            sx={{ textTransform: 'none', bgcolor: '#2A8BF2', borderRadius: 1.5, boxShadow: 'none', fontWeight: 300, alignSelf: 'flex-start' }}
+                        >
+                            Редактировать
+                        </Button>
+                    </Stack>
                     <Box sx={{ textAlign: 'right' }}>
                         <Typography sx={{ color: '#8B8C93', fontWeight: 300 }}>Опубликовано: {formatDate(ad.createdAt)}</Typography>
                         <Typography sx={{ color: '#8B8C93', fontWeight: 300 }}>Отредактировано: {formatDate(ad.updatedAt)}</Typography>
