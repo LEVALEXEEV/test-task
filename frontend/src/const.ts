@@ -1,5 +1,5 @@
 import type { Ad, AdCategoryCode } from './types/ad'
-import type { FieldConfig } from './types/ad-edit'
+import type { AdParamKey, CategoryFieldConfigMap } from './types/ad-edit'
 import type { SortOptionValue, AdsSortColumn, AdsSortDirection } from './types/sort-params';
 
 export const AD_CATEGORY_LABELS: Record<AdCategoryCode, string> = {
@@ -42,8 +42,6 @@ export const AD_PARAM_LABELS: Record<string, string> = {
 	enginePower: 'Мощность',
 }
 
-export type AdParamKey = Exclude<keyof typeof AD_PARAM_LABELS, 'description'>
-
 export const AD_CATEGORY_PARAM_KEYS: Record<Ad['category'], AdParamKey[]> = {
 	auto: ['brand', 'model', 'yearOfManufacture', 'transmission', 'mileage', 'enginePower'],
 	real_estate: ['type', 'address', 'area', 'floor'],
@@ -60,14 +58,6 @@ export const AD_PARAM_VALUE_LABELS: Record<string, string> = {
 	used: 'Б/у',
 	automatic: 'Автомат',
 	manual: 'Механика',
-}
-
-type CategoryParamsMap = {
-	[C in Ad['category']]: Extract<Ad, { category: C }>['params']
-}
-
-type CategoryFieldConfigMap = {
-	[C in Ad['category']]: Array<FieldConfig<Extract<keyof CategoryParamsMap[C], string>>>
 }
 
 export const AD_CATEGORY_FIELDS: CategoryFieldConfigMap = {

@@ -1,4 +1,4 @@
-import type { Ad, AdCategoryCode} from "./ad"
+import type { Ad, AdCategoryCode } from "./ad"
 export type AdsSortColumn = Extract<keyof Ad, 'title' | 'createdAt'>;
 
 export type AdsSortDirection = 'asc' | 'desc'

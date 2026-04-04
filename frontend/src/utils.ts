@@ -1,4 +1,3 @@
-
 export const toOptionalNumber = (value: string): number | undefined => {
     const normalized = value.trim().replace(/\s+/g, '')
 

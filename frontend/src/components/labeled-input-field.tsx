@@ -64,15 +64,14 @@ function LabeledInputField({
                 onBlur={onBlur}
                 error={error}
                 helperText={helperText}
-                inputProps={
-                    digitsOnly
-                        ? {
-                              inputMode: 'numeric',
-                              pattern: '[0-9]*',
-                          }
-                        : undefined
-                }
                 slotProps={{
+                    htmlInput:
+                        digitsOnly
+                            ? {
+                                  inputMode: 'numeric',
+                                  pattern: '[0-9]*',
+                              }
+                            : undefined,
                     input: {
                         endAdornment:
                             !selectOptions && showClear && onClear ? (

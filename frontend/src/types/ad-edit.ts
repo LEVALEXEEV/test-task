@@ -1,8 +1,6 @@
 import type { Ad, AutoItemParams, ElectronicsItemParams, RealEstateItemParams } from './ad'
 
-type UnionKeys<T> = T extends unknown ? keyof T : never
-
-export type AdParamKey = Extract<UnionKeys<AutoItemParams | RealEstateItemParams | ElectronicsItemParams>, string>
+export type AdParamKey = Extract<keyof AutoItemParams | keyof RealEstateItemParams | keyof ElectronicsItemParams, string>
 
 export type FieldConfig<K extends string = AdParamKey> = {
     key: K
@@ -19,4 +17,12 @@ export type NoticeState = {
 export type FormState = Omit<Ad, 'id' | 'createdAt' | 'updatedAt' | 'price' | 'params'> & {
     price: string
     params: Partial<Record<AdParamKey, string>>
+}
+
+export type CategoryParamsMap = {
+	[C in Ad['category']]: Extract<Ad, { category: C }>['params']
+}
+
+export type CategoryFieldConfigMap = {
+	[C in Ad['category']]: Array<FieldConfig<Extract<keyof CategoryParamsMap[C], string>>>
 }

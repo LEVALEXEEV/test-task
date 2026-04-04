@@ -9,6 +9,7 @@ import type { AdParamValue } from '../types/ad'
 import { AD_CATEGORY_PARAM_KEYS, AD_PARAM_LABELS, AD_PARAM_VALUE_LABELS } from '../const'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { fetchAdByIdAction, getAd, getIsFetchingAdStatus } from '../store/slices/single-ad'
+import type { AdParamKey } from '../types/ad-edit'
 
 const formatDate = (isoDate: string) =>
     new Intl.DateTimeFormat('ru-RU', {
@@ -66,7 +67,7 @@ function AdPage() {
     }
 
     const params = ad.params as Record<string, AdParamValue>
-    const missingParams = AD_CATEGORY_PARAM_KEYS[ad.category].filter((paramKey) => {
+    const missingParams: (AdParamKey | 'description')[] = AD_CATEGORY_PARAM_KEYS[ad.category].filter((paramKey) => {
         const value = params[paramKey]
         return value === undefined || value === null || value === ''
     })
